@@ -1,0 +1,4 @@
+function error = find_norm_error(A,A_proj)
+error = 0.0;
+dim = size(A);
+num = dim(1)
