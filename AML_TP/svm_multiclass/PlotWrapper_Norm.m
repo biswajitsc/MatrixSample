@@ -1,7 +1,7 @@
 function [] = PlotWrapper_Norm()
     % M = ['N', 'D', 'K', 'v', 'rho', 't', 'rper', 'batch'];
     for vper = [1.0:0.2:1.0]
-        for N = [100:100:400]
+        for N = [300:100:400]
             for D = [200:200:1000]
                 K = 2;
                 v = ceil(vper * D);
@@ -17,7 +17,7 @@ function [] = PlotWrapper_Norm()
                 M = [N, D, K, v, pho, t, rper, batch, myreshape(E), myreshape(R)];
 %                 disp(myreshape(E));
 %                 disp(myreshape(R));
-                dlmwrite('Experiments_Data_Norm.csv',M,'delimiter',',','-append');
+                dlmwrite('Experiments_Data_Norm_2.csv',M,'delimiter',',','-append');
 %                 break
             end
 %             break
