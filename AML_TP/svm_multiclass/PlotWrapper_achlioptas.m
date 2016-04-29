@@ -7,7 +7,7 @@ function [] = PlotWrapper_achlioptas()
                 v = D;
                 pho = 0.7;
                 t = 128;
-                batch = 1;
+                batch = 10;
                 str = sprintf('N = %d   D = %d   v = %d', N, D, v);
                 disp(str);
                 [E, R] = experiments_achlioptas('dense', N, D, K, v, pho, t, rper, batch);
