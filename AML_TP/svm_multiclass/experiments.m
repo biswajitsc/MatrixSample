@@ -6,9 +6,8 @@ function [Errors, Ranks] = experiments(datatype, N, D, K, v, pho, t, rper, batch
     
     r = ceil(D*rper);
     
-    method_iter = 0;
-        
     for iter = [1:batch]   
+        method_iter = 0;
         
         if strcmp(datatype, 'dense')
             data = GenData2(N, D, v);
