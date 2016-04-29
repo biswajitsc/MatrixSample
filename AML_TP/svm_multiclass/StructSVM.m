@@ -1,4 +1,4 @@
-function [training_error, testing_error] = StructSVM(X, Y)
+function [sample_error, training_error, testing_error] = StructSVM(Xsample, Ysample, Xtrain, Ytrain, Xtest, Ytest)
 
 %% Using the StructSVM function
 % Takes input the data matrix X (Nxd) matrix
@@ -9,23 +9,26 @@ function [training_error, testing_error] = StructSVM(X, Y)
 % Run from the script from the same folder where you build it.
 
 %% Split and test
-	dim = size(X);
-	N = dim(1);
-	d = dim(2);
+	sample_data_X = Xsample;
+	sample_data_Y = Ysample;
+    
+	train_data_X = Xtrain;
+	train_data_Y = Ytrain;
 
-	training_size = 0.6*N;
-	validation_size = 0.2*N;
-	testing_size = 0.2*N;
-
-	train_data_X = X(1:training_size, :);
-	train_data_Y = Y(1:training_size, :);
-
-	testing_data_X = X(training_size+validation_size+1:end, :);
-	testing_data_Y = Y(training_size+validation_size+1:end, :);
+	testing_data_X = Xtest;
+	testing_data_Y = Ytest;
+    
+    write_to_file(sample_data_X, sample_data_Y, 'data/sample.dat');
 	write_to_file(train_data_X, train_data_Y, 'data/train.dat');
 	write_to_file(testing_data_X, testing_data_Y, 'data/test.dat');
 
-	! ./svm_multiclass_learn -c 5000 data/train.dat data/model 
+	! ./svm_multiclass_learn -c 5000 data/sample.dat data/model 
+    ! ./svm_multiclass_classify data/sample.dat data/model data/predictions
+	
+	fileID = fopen('output.txt','r');
+	formatSpec = '%f';
+	sample_error = fscanf(fileID,formatSpec);
+    
 	! ./svm_multiclass_classify data/train.dat data/model data/predictions
 	
 	fileID = fopen('output.txt','r');

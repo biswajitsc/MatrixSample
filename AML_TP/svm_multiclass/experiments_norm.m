@@ -50,8 +50,8 @@ function [Errors, Ranks] = experiments_norm(datatype, N, D, K, v, pho, t, rper, 
 %            str = sprintf('Test error for iteration %d : %f\n', iter, test_error_ABSS(iter, 1));
 %            disp(str);
 %            
-        test_error_ABSS(iter,1) = 100.0;
-        test_error_SS(iter,1) = 100.0;
+%         test_error_ABSS(iter,1) = 100.0;
+%         test_error_SS(iter,1) = 100.0;
               
         disp('For Leverage Sampling...\n');
            data_proj = LeverageSampling(data, r);
