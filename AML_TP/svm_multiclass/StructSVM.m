@@ -13,15 +13,14 @@ function [training_error, testing_error] = StructSVM(X, Y)
 	N = dim(1);
 	d = dim(2);
 
-	training_size = 0.6*N;
-	validation_size = 0.2*N;
+	training_size = 0.8*N;
 	testing_size = 0.2*N;
 
 	train_data_X = X(1:training_size, :);
 	train_data_Y = Y(1:training_size, :);
 
-	testing_data_X = X(training_size+validation_size+1:end, :);
-	testing_data_Y = Y(training_size+validation_size+1:end, :);
+	testing_data_X = X(training_size+1:end, :);
+	testing_data_Y = Y(training_size+1:end, :);
 	write_to_file(train_data_X, train_data_Y, 'data/train.dat');
 	write_to_file(testing_data_X, testing_data_Y, 'data/test.dat');
 
