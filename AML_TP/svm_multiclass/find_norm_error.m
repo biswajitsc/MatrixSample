@@ -12,7 +12,4 @@ V_ = A_proj*A_proj';
     diff = diff/num/num;
     diff = sqrt(diff);
     error = diff;
-    
 end
-
-% error = error/num;

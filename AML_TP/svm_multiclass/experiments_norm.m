@@ -40,7 +40,6 @@ function [Errors, Ranks] = experiments_norm(datatype, N, D, K, v, pho, t, rper, 
            disp(str);
         
         method_iter = mod(method_iter + 1, num_methods);
-                   
         disp('For Leverage Sampling...\n');
            data_proj = LeverageSampling(data, r);
            train_error(method_iter+1, iter, 1) = find_norm_error(data,data_proj);
