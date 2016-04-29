@@ -1,15 +1,14 @@
 function [Errors, Ranks] = experiments_norm(datatype, N, D, K, v, pho, t, rper, batch)
-%     
-    test_error_LS = zeros(batch,1);
-    test_error_PCA = zeros(batch,1);
-    test_error_CW = zeros(batch,1);
-    test_error_ABSS = zeros(batch,1);
-    test_error_SS = zeros(batch,1);
-    test_error = zeros(batch,1);
+%   
+    num_methods = 3;
+    train_error = zeros(num_methods,batch,1);
+    test_error = zeros(num_methods,batch,1);
     
     r = ceil(D*rper);
-
-    for iter = [1:batch]
+    
+    method_iter = 0;
+        
+    for iter = [1:batch]   
         
         if strcmp(datatype, 'dense')
             data = GenData2(N, D, v);
@@ -17,72 +16,84 @@ function [Errors, Ranks] = experiments_norm(datatype, N, D, K, v, pho, t, rper, 
             data = GenDataSparse(N, D, v, pho);
         end
         
-        test_error(iter,1) = 0.0;
-        
+        Y = labels(data, N, D, K);
+    
+%         disp('Original matrix...\n');
+%            [train_error(method_iter+1, iter, 1), test_error(method_iter+1, iter, 1)] = StructSVM(data, Y);
+%            str = sprintf('Train error for iteration %d : %f\nTest error for iteration %d : %f\n', iter, train_error(method_iter+1, iter, 1), iter, test_error(method_iter+1, iter, 1));
+%            disp(str);
+%            
+%         method_iter = mod(method_iter + 1, num_methods);
+%         
         disp('For PCA ...\n');
            data_proj = computePCA(data, r);
-           test_error_PCA(iter, 1) = find_norm_error(data,data_proj);
-           str = sprintf('Test error for iteration %d : %f\n', iter, test_error_PCA(iter, 1));
+           [train_error(method_iter+1, iter, 1), test_error(method_iter+1, iter, 1)] = find_norm_error(data,data_proj);
+           str = sprintf('Train error for iteration %d : %f\nTest error for iteration %d : %f\n', iter, train_error(method_iter+1, iter, 1), iter, test_error(method_iter+1, iter, 1));
            disp(str);
            
-           
+        method_iter = mod(method_iter + 1, num_methods);
+        
         disp('For Clarkson Woodruff...\n');
            [data_proj, ~ , ~] = ClarksonWoodruff(data', r);
            data_proj = data_proj';
-           test_error_CW(iter, 1) = find_norm_error(data,data_proj);
-           str = sprintf('Test error for iteration %d : %f\n', iter, test_error_CW(iter, 1));
+           [train_error(method_iter+1, iter, 1), test_error(method_iter+1, iter, 1)] = find_norm_error(data,data_proj);
+           str = sprintf('Train error for iteration %d : %f\nTest error for iteration %d : %f\n', iter, train_error(method_iter+1, iter, 1), iter, test_error(method_iter+1, iter, 1));
            disp(str);
         
-%         disp('For Approximate BSS...\n');
-%            [S, Diag] = ApproximateBSS(data, t, r);
-%            data_proj = data * S * Diag;
-%            test_error_BSS(iter, 1) = find_norm_error(data,data_proj);
-%            str = sprintf('Test error for iteration %d : %f\n', iter, test_error_BSS(iter, 1));
-%            disp(str);
-%         
-%         disp('For Spectral Sparsification...\n');
-%            [~, sig, V] = svd(data);
-%            rankv = rank(sig);
-%            V = V(:,1:rankv);
-%            [S, Diag] = Spectral_sparsification(V', r);
-%            data_proj = data * S * Diag;    
-%            test_error_ABSS(iter, 1) = find_norm_error(data,data_proj);
-%            str = sprintf('Test error for iteration %d : %f\n', iter, test_error_ABSS(iter, 1));
-%            disp(str);
-%            
-        test_error_ABSS(iter,1) = 100.0;
-        test_error_SS(iter,1) = 100.0;
-              
+        method_iter = mod(method_iter + 1, num_methods);
+                   
         disp('For Leverage Sampling...\n');
            data_proj = LeverageSampling(data, r);
-           test_error_LS(iter, 1) = find_norm_error(data,data_proj);
-           str = sprintf('Test error for iteration %d : %f\n', iter, test_error_LS(iter, 1));
+           [train_error(method_iter+1, iter, 1), test_error(method_iter+1, iter, 1)] = find_norm_error(data,data_proj);
+           str = sprintf('Train error for iteration %d : %f\nTest error for iteration %d : %f\n', iter, train_error(method_iter+1, iter, 1), iter, test_error(method_iter+1, iter, 1));
            disp(str);
+        
+        method_iter = mod(method_iter + 1, num_methods);
+        
     end
     
-    Ranks = evaluateRanking(test_error_CW, test_error_ABSS, test_error_SS, test_error_PCA, test_error_LS, batch, 5);
-%     evaluateHistogram(test_error_CW, test_error_ABSS, test_error_SS);
+    Ranks = evaluateRanking(test_error, batch, num_methods);
 
+    Errors = zeros(num_methods,2);
+    for i = [1:num_methods]
+        Errors(i,1) = mean(test_error(i));
+        Errors(i,2) = var(test_error(i));
+    end
+        
+% % Errors = [mean(test_error) var(test_error)
+%     mean(test_error_PCA) var(test_error_PCA)
+%     mean(test_error_LS) var(test_error_LS)
+%     mean(test_error_CW) var(test_error_CW)
+%     mean(test_error_SS) var(test_error_SS)
+%     mean(test_error_ABSS) var(test_error_ABSS)
+%     ];
 
-Errors = [mean(test_error) var(test_error)
-    mean(test_error_PCA) var(test_error_PCA)
-    mean(test_error_LS) var(test_error_LS)
-    mean(test_error_CW) var(test_error_CW)
-    mean(test_error_SS) var(test_error_SS)
-    mean(test_error_ABSS) var(test_error_ABSS)
-    ];
-
-
-
-                
 end
            
 
-function [rank] = evaluateRanking(test_error_CW, test_error_ABSS, test_error_SS, test_error_PCA, test_error_LS, batch, num_methods)
+function[Y] = labels(X, N, D, K)
+ 
+    W = rand(D, K);    
+    Labels = X*W;
+    Y = zeros(N,1);
+    for i = [1:N]
+        [~,inds] = sort(Labels(i,:));
+        Y(i,1) = inds(K);
+        if rand < 0.1 
+            Y(i,1) = ceil(K*rand);
+        end
+    end
+end
+
+
+function [rank] = evaluateRanking(test_error, batch, num_methods)
     rank = zeros(num_methods);
-    
     for iter = 1:batch
-        [~,inds] = sort([test_error_CW(iter,1), test_error_ABSS(iter, 1), test_error_SS(iter,1), test_error_PCA(iter, 1), test_error_LS(iter, 1)]);
+        temp_error = zeros(1,num_methods);
+        for i=[1:num_methods]
+            temp_error(1,i) = test_error(i,1);
+        end
+        [~,inds] = sort(temp_error);
         for i = 1:num_methods
             rank(i,inds(i)) = rank(i, inds(i))+1;
         end
