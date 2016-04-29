@@ -8,7 +8,7 @@ function [] = PlotWrapper_Norm()
                 pho = 0.7;
                 t = 128;
                 rper = 0.8;
-                batch = 20;
+                batch = 1;
                 str = sprintf('N = %d   D = %d   v = %d', N, D, v);
                 disp(str);
                 [E, R] = experiments_norm('dense', N, D, K, v, pho, t, rper, batch);
@@ -17,7 +17,7 @@ function [] = PlotWrapper_Norm()
                 M = [N, D, K, v, pho, t, rper, batch, myreshape(E), myreshape(R)];
 %                 disp(myreshape(E));
 %                 disp(myreshape(R));
-                dlmwrite('Experiments_Data_Norm_2.csv',M,'delimiter',',','-append');
+                dlmwrite('Experiments_Data_Norm_New.csv',M,'delimiter',',','-append');
 %                 break
             end
 %             break

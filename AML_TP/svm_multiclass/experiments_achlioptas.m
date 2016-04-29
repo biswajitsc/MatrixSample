@@ -1,6 +1,6 @@
-function [Errors, Ranks] = experiments(datatype, N, D, K, v, pho, t, rper, batch)
+function [Errors, Ranks] = experiments_achlioptas(datatype, N, D, K, v, pho, t, rper, batch)
 %   
-    num_methods = 4;
+    num_methods = 7;
     train_error = zeros(num_methods,batch,1);
     test_error = zeros(num_methods,batch,1);
     
@@ -24,30 +24,54 @@ function [Errors, Ranks] = experiments(datatype, N, D, K, v, pho, t, rper, batch
            
         method_iter = mod(method_iter + 1, num_methods);
         
-        disp('For PCA ...\n');
-           data_proj = computePCA(data, r);
+        disp('For compute_low_rank_approx ...\n');
+           data_proj = compute_low_rank_approx(data, r);
            [train_error(method_iter+1, iter, 1), test_error(method_iter+1, iter, 1)] = StructSVM(data_proj, Y);
            str = sprintf('Train error for iteration %d : %f\nTest error for iteration %d : %f\n', iter, train_error(method_iter+1, iter, 1), iter, test_error(method_iter+1, iter, 1));
            disp(str);
            
         method_iter = mod(method_iter + 1, num_methods);
         
-        disp('For Clarkson Woodruff...\n');
-           [data_proj, ~ , ~] = ClarksonWoodruff(data', r);
-           data_proj = data_proj';
+        disp('For coopting_noise_plusminusAij...\n');
+           data_proj = coopting_noise_plusminusAij(data);
            [train_error(method_iter+1, iter, 1), test_error(method_iter+1, iter, 1)] = StructSVM(data_proj, Y);
            str = sprintf('Train error for iteration %d : %f\nTest error for iteration %d : %f\n', iter, train_error(method_iter+1, iter, 1), iter, test_error(method_iter+1, iter, 1));
            disp(str);
         
         method_iter = mod(method_iter + 1, num_methods);
                    
-        disp('For Leverage Sampling...\n');
-           data_proj = LeverageSampling(data, r);
+        disp('For coopting_noise_quantization...\n');
+           data_proj = coopting_noise_quantization(data);
            [train_error(method_iter+1, iter, 1), test_error(method_iter+1, iter, 1)] = StructSVM(data_proj, Y);
            str = sprintf('Train error for iteration %d : %f\nTest error for iteration %d : %f\n', iter, train_error(method_iter+1, iter, 1), iter, test_error(method_iter+1, iter, 1));
            disp(str);
         
         method_iter = mod(method_iter + 1, num_methods);
+        
+        disp('For coopting_noise_uniform_sampling...\n');
+           data_proj = coopting_noise_uniform_sampling(data);
+           [train_error(method_iter+1, iter, 1), test_error(method_iter+1, iter, 1)] = StructSVM(data_proj, Y);
+           str = sprintf('Train error for iteration %d : %f\nTest error for iteration %d : %f\n', iter, train_error(method_iter+1, iter, 1), iter, test_error(method_iter+1, iter, 1));
+           disp(str);
+        
+        method_iter = mod(method_iter + 1, num_methods);
+        
+        disp('For coopting_noise_weighted_sampling...\n');
+           data_proj = coopting_noise_weighted_sampling(data);
+           [train_error(method_iter+1, iter, 1), test_error(method_iter+1, iter, 1)] = StructSVM(data_proj, Y);
+           str = sprintf('Train error for iteration %d : %f\nTest error for iteration %d : %f\n', iter, train_error(method_iter+1, iter, 1), iter, test_error(method_iter+1, iter, 1));
+           disp(str);
+        
+        method_iter = mod(method_iter + 1, num_methods);
+        
+        disp('For equiv_norm...\n');
+           data_proj = equiv_norm(data, r);
+           [train_error(method_iter+1, iter, 1), test_error(method_iter+1, iter, 1)] = StructSVM(data_proj, Y);
+           str = sprintf('Train error for iteration %d : %f\nTest error for iteration %d : %f\n', iter, train_error(method_iter+1, iter, 1), iter, test_error(method_iter+1, iter, 1));
+           disp(str);
+        
+        method_iter = mod(method_iter + 1, num_methods);      
+        
         
     end
     
