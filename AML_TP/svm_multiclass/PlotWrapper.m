@@ -13,10 +13,11 @@ function [] = PlotWrapper()
                 [E, R] = experiments('dense', N, D, K, v, pho, t, rper, batch);
                 dim = size(E);
                 n = dim(1);
-                M = [N, D, K, v, pho, t, rper, batch, myreshape(E), myreshape(R)];
+%                 M = [N, D, K, v, pho, t, rper, batch, myreshape(E), myreshape(R)];
+                M = [N, D, K, rper, myreshape(E), myreshape(R)];
                 disp(myreshape(E));
                 disp(myreshape(R));
-                dlmwrite('Experiments_Data_StructSVM_New.csv',M,'delimiter',',');
+                dlmwrite('Experiments_Data_StructSVM_Train_New.csv',M,'delimiter',',');
 %                 break
             end
 %             break

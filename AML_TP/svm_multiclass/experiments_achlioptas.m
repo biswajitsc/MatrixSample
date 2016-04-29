@@ -75,13 +75,13 @@ function [Errors, Ranks] = experiments_achlioptas(datatype, N, D, K, v, pho, t, 
         
     end
     
-    Ranks = evaluateRanking(test_error, batch, num_methods);
+    Ranks = evaluateRanking(train_error, batch, num_methods);
 
     Errors = zeros(num_methods,2);
     for i = [1:num_methods]
-        Errors(i,1) = mean(test_error(i,:,1));
-        Errors(i,2) = var(test_error(i,:,1));
-        disp(test_error(i,:,1));
+        Errors(i,1) = mean(train_error(i,:,1));
+        Errors(i,2) = var(train_error(i,:,1));
+        disp(train_error(i,:,1));
     end
         
 % % Errors = [mean(test_error) var(test_error)
