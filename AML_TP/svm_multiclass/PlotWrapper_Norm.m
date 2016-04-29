@@ -1,15 +1,15 @@
 function [] = PlotWrapper_Norm()
     % M = ['N', 'D', 'K', 'v', 'rho', 't', 'rper', 'batch'];
-    for vper = [1.0:0.2:1.0]
-        for N = [300:100:400]
-            for D = [200:200:1000]
+   for rper = [0.8:0.1:0.8]
+        for N = [200]
+            for D = [1000]
                 K = 2;
-                v = ceil(vper * D);
+                v = D;
                 pho = 0.7;
                 t = 128;
                 rper = 0.8;
                 batch = 20;
-                str = sprintf('N = %d   D = %d   vper = %d', N, D, vper);
+                str = sprintf('N = %d   D = %d   v = %d', N, D, v);
                 disp(str);
                 [E, R] = experiments_norm('dense', N, D, K, v, pho, t, rper, batch);
                 dim = size(E);

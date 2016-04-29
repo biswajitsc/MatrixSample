@@ -22,7 +22,7 @@ function [sample_error, training_error, testing_error] = StructSVM(Xsample, Ysam
 	write_to_file(train_data_X, train_data_Y, 'data/train.dat');
 	write_to_file(testing_data_X, testing_data_Y, 'data/test.dat');
 
-	! ./svm_multiclass_learn -c 5000 data/sample.dat data/model 
+	! ./svm_multiclass_learn -c 0.1 data/sample.dat data/model 
     ! ./svm_multiclass_classify data/sample.dat data/model data/predictions
 	
 	fileID = fopen('output.txt','r');
