@@ -91,7 +91,7 @@ function [rank] = evaluateRanking(test_error, batch, num_methods)
     for iter = 1:batch
         temp_error = zeros(1,num_methods);
         for i=[1:num_methods]
-            temp_error(1,i) = test_error(i,1);
+            temp_error(1,i) = test_error(i,iter,1);
         end
         [~,inds] = sort(temp_error);
         for i = 1:num_methods
@@ -100,6 +100,5 @@ function [rank] = evaluateRanking(test_error, batch, num_methods)
   
     end
     
-    disp(rank);
-    
+    disp(rank);    
 end
