@@ -18,8 +18,3 @@ for i = [1:d]
         D_proj = [D_proj D(:,i)/sqrt(W(i))];
     end
 end
-
-P = D*D'; Q = D_proj*D_proj';
-c = sum(sum(P.*Q))/sum(sum(Q.*Q));
-
-D_proj = c * D_proj;
