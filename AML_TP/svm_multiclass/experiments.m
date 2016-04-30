@@ -13,6 +13,12 @@ function [Errors, Ranks] = experiments(datatype, N, D, K, v, pho, t, rper, batch
             data = GenData2(N, D, v);
         elseif strcmp(datatype, 'sparse')
             data = GenDataSparse(N, D, v, pho);
+        elseif strcmp(datatype, 'techtc')
+            data = TechTC(iter);
+            dim = size(data);
+            N = dim(1);
+            D = dim(2);
+            K = 2;
         end
         
         Y = labels(data, N, D, K);
