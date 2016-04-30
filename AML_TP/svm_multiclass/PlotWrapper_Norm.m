@@ -1,6 +1,6 @@
 function [] = PlotWrapper_Norm()
     % M = ['N', 'D', 'K', 'v', 'rho', 't', 'rper', 'batch'];
-   for rper = [0.8:0.1:0.8]
+   for rper = [0.2:0.1:0.8]
         for N = [200]
             for D = [1000]
                 K = 5;
