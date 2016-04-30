@@ -32,6 +32,7 @@ function [Errors, Ranks] = experiments(datatype, N, D, K, v, pho, t, rper, batch
         
         disp('For PCA ...\n');
            data_proj = computePCA(data, r);
+           data_proj = OptRescale(data, data_proj);
            [train_error(method_iter+1, iter, 1), test_error(method_iter+1, iter, 1)] = StructSVM(data_proj, Y);
            str = sprintf('Train error for iteration %d : %f\nTest error for iteration %d : %f\n', iter, train_error(method_iter+1, iter, 1), iter, test_error(method_iter+1, iter, 1));
            disp(str);
@@ -41,6 +42,7 @@ function [Errors, Ranks] = experiments(datatype, N, D, K, v, pho, t, rper, batch
         disp('For Clarkson Woodruff...\n');
            [data_proj, ~ , ~] = ClarksonWoodruff(data', r);
            data_proj = data_proj';
+           data_proj = OptRescale(data, data_proj);
            [train_error(method_iter+1, iter, 1), test_error(method_iter+1, iter, 1)] = StructSVM(data_proj, Y);
            str = sprintf('Train error for iteration %d : %f\nTest error for iteration %d : %f\n', iter, train_error(method_iter+1, iter, 1), iter, test_error(method_iter+1, iter, 1));
            disp(str);
@@ -49,6 +51,7 @@ function [Errors, Ranks] = experiments(datatype, N, D, K, v, pho, t, rper, batch
                    
         disp('For Leverage Sampling...\n');
            data_proj = LeverageSampling(data, r);
+           data_proj = OptRescale(data, data_proj);
            [train_error(method_iter+1, iter, 1), test_error(method_iter+1, iter, 1)] = StructSVM(data_proj, Y);
            str = sprintf('Train error for iteration %d : %f\nTest error for iteration %d : %f\n', iter, train_error(method_iter+1, iter, 1), iter, test_error(method_iter+1, iter, 1));
            disp(str);

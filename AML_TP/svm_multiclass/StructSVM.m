@@ -13,8 +13,8 @@ function [training_error, testing_error] = StructSVM(X, Y)
 	N = dim(1);
 	d = dim(2);
 
-	training_size = 0.8*N;
-	testing_size = 0.2*N;
+	training_size = ceil(0.8*N);
+	testing_size = N - training_size;
 
 	train_data_X = X(1:training_size, :);
 	train_data_Y = Y(1:training_size, :);
