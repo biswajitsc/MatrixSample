@@ -1,13 +1,13 @@
 function [] = PlotWrapper()
     % M = ['N', 'D', 'K', 'v', 'rho', 't', 'rper', 'batch'];
-    for rper = [0.2:0.1:0.2]
+    for rper = [0.9:0.1:1.0]
         for N = [200]
             for D = [1000]
                 K = 5;
                 v = D;
                 pho = 0.7;
                 t = 128;
-                batch = 3;
+                batch = 20;
                 str = sprintf('N = %d   D = %d   v = %d', N, D, v);
                 disp(str);
                 [E, R] = experiments('dense', N, D, K, v, pho, t, rper, batch);
@@ -17,7 +17,7 @@ function [] = PlotWrapper()
                 M = [N, D, K, rper, myreshape(E), myreshape(R)];
                 disp(myreshape(E));
                 disp(myreshape(R));
-                dlmwrite('Experiments_Data_StructSVM_Train_New.csv',M,'delimiter',',','-append');
+                dlmwrite('Experiments_Data_StructSVM_Train_New2.csv',M,'delimiter',',','-append');
 %                 break
             end
 %             break

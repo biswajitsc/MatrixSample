@@ -7,8 +7,7 @@ function [] = PlotWrapper_Norm()
                 v = D;
                 pho = 0.7;
                 t = 128;
-                rper = 0.8;
-                batch = 1;
+                batch = 20;
                 str = sprintf('N = %d   D = %d   v = %d', N, D, v);
                 disp(str);
                 [E, R] = experiments_norm('dense', N, D, K, v, pho, t, rper, batch);

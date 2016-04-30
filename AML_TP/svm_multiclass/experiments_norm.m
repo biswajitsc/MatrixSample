@@ -42,6 +42,7 @@ function [Errors, Ranks] = experiments_norm(datatype, N, D, K, v, pho, t, rper, 
            disp(str);
         
         method_iter = mod(method_iter + 1, num_methods);
+        
         disp('For Leverage Sampling...\n');
            data_proj = LeverageSampling(data, r);
            data_proj = OptRescale(data, data_proj);

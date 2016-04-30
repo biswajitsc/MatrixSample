@@ -1,10 +1,10 @@
-filename = 'Experiments_Data_StructSVM_Train_New.csv';
+filename = 'Experiments_Data_StructSVM_Train_New2.csv';
 M = csvread(filename);
 num_methods = 3;
 offset = 7;
 Y = M(:,offset:offset+2*num_methods - 1);
 disp(Y);
-X = [0.2:0.1:0.8];
+X = [0.2:0.1:1.0];
 
 figure 
 
