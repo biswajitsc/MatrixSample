@@ -10,7 +10,7 @@ function error = find_norm_error(A,A_proj)
     diff = diff.*diff;
     diff = sum(diff);
     diff = sum(diff);
-    diff = diff/n/m;
+    diff = diff/n/n;
     diff = sqrt(diff);
     error = diff;
 end
