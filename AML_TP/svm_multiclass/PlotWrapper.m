@@ -1,13 +1,13 @@
 function [] = PlotWrapper()
     % M = ['N', 'D', 'K', 'v', 'rho', 't', 'rper', 'batch'];
-    for rper = [0.2:0.1:0.8]
+    for rper = [0.2:0.1:0.2]
         for N = [200]
             for D = [1000]
                 K = 5;
                 v = D;
                 pho = 0.7;
                 t = 128;
-                batch = 20;
+                batch = 3;
                 str = sprintf('N = %d   D = %d   v = %d', N, D, v);
                 disp(str);
                 [E, R] = experiments('dense', N, D, K, v, pho, t, rper, batch);
