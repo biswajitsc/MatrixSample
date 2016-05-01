@@ -1,4 +1,4 @@
-filename = 'Experiments_Data_StructSVM_Train_New2.csv';
+filename = 'Experiments_Data_StructSVM_Test_New.csv';
 M = csvread(filename);
 num_methods = 3;
 offset = 7;
@@ -11,7 +11,7 @@ figure
 C = ['b','g','r'];
 
 for i = [1:num_methods]
-    plot(X,Y(:,i),C(i));
+    plot(X,Y(:,2*(i-1)+1),C(i));
     hold on;
 end
 
