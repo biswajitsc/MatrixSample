@@ -1,6 +1,6 @@
 function [Errors, Ranks] = experiments_achlioptas(datatype, N, D, K, v, pho, t, rper, batch)
 %   
-    num_methods = 7;
+    num_methods = 6;
     train_error = zeros(num_methods,batch,1);
     test_error = zeros(num_methods,batch,1);
     
@@ -32,14 +32,14 @@ function [Errors, Ranks] = experiments_achlioptas(datatype, N, D, K, v, pho, t, 
            
         method_iter = mod(method_iter + 1, num_methods);
         
-        disp('For coopting_noise_plusminusAij...\n');
-           data_proj = coopting_noise_plusminusAij(data);
-           [train_error(method_iter+1, iter, 1), test_error(method_iter+1, iter, 1)] = StructSVM(data_proj, Y);
-           str = sprintf('Train error for iteration %d : %f\nTest error for iteration %d : %f\n', iter, train_error(method_iter+1, iter, 1), iter, test_error(method_iter+1, iter, 1));
-           disp(str);
-        
-        method_iter = mod(method_iter + 1, num_methods);
-                   
+%         disp('For coopting_noise_plusminusAij...\n');
+%            data_proj = coopting_noise_plusminusAij(data);
+%            [train_error(method_iter+1, iter, 1), test_error(method_iter+1, iter, 1)] = StructSVM(data_proj, Y);
+%            str = sprintf('Train error for iteration %d : %f\nTest error for iteration %d : %f\n', iter, train_error(method_iter+1, iter, 1), iter, test_error(method_iter+1, iter, 1));
+%            disp(str);
+%         
+%         method_iter = mod(method_iter + 1, num_methods);
+%                    
         disp('For coopting_noise_quantization...\n');
            data_proj = coopting_noise_quantization(data);
            [train_error(method_iter+1, iter, 1), test_error(method_iter+1, iter, 1)] = StructSVM(data_proj, Y);
