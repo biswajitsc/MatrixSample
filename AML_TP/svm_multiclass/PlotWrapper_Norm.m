@@ -17,7 +17,7 @@ function [] = PlotWrapper_Norm()
 %                 M = [N, D, K, v, pho, t, rper, batch, myreshape(E), myreshape(R)];
 %                 disp(myreshape(E));
 %                 disp(myreshape(R));
-                dlmwrite('Experiments_Data_Norm_New.csv',M,'delimiter',',','-append');
+                dlmwrite('Experiments_Data_Norm_New_2.csv',M,'delimiter',',','-append');
 %                 break
             end
 %             break

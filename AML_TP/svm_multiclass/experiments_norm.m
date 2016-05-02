@@ -26,7 +26,7 @@ function [Errors, Ranks] = experiments_norm(datatype, N, D, K, v, pho, t, rper, 
 %         
         disp('For PCA ...\n');
            data_proj = computePCA(data, r);
-           data_proj = OptRescale(data, data_proj);
+%            data_proj = OptRescale(data, data_proj);
            train_error(method_iter+1, iter, 1) = find_norm_error(data,data_proj);
            str = sprintf('Train error for iteration %d : %f\nTest error for iteration %d : %f\n', iter, train_error(method_iter+1, iter, 1), iter, train_error(method_iter+1, iter, 1));
            disp(str);
@@ -36,7 +36,7 @@ function [Errors, Ranks] = experiments_norm(datatype, N, D, K, v, pho, t, rper, 
         disp('For Clarkson Woodruff...\n');
            [data_proj, ~ , ~] = ClarksonWoodruff(data', r);
            data_proj = data_proj';
-           data_proj = OptRescale(data, data_proj);
+%            data_proj = OptRescale(data, data_proj);
            train_error(method_iter+1, iter, 1) = find_norm_error(data,data_proj);
            str = sprintf('Train error for iteration %d : %f\nTest error for iteration %d : %f\n', iter, train_error(method_iter+1, iter, 1), iter, train_error(method_iter+1, iter, 1));
            disp(str);
@@ -45,7 +45,7 @@ function [Errors, Ranks] = experiments_norm(datatype, N, D, K, v, pho, t, rper, 
         
         disp('For Leverage Sampling...\n');
            data_proj = LeverageSampling(data, r);
-           data_proj = OptRescale(data, data_proj);
+%            data_proj = OptRescale(data, data_proj);
            train_error(method_iter+1, iter, 1) = find_norm_error(data,data_proj);
            str = sprintf('Train error for iteration %d : %f\nTest error for iteration %d : %f\n', iter, train_error(method_iter+1, iter, 1), iter, train_error(method_iter+1, iter, 1));
            disp(str);

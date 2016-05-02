@@ -6,8 +6,9 @@ disp(size(U));
 disp(size(S));
 disp(size(V));
 
-ind = randsample(u, u-v);
-for i=1:(u-v)
+cr = min(n,u);
+ind = randsample(cr, cr-v);
+for i=1:(cr-v)
     it = ind(i);
     S(it,it) = 0.0;
 end
